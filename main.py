@@ -59,10 +59,13 @@ MDT_DF = pd.DataFrame(dict1)
 MNT_DF = pd.DataFrame(dict2)
 ALA_DF = pd.DataFrame(dict3)
 
+print("**** MACRO NAME TABLE ****")
 print(MNT_DF)
 print()
+print("**** MACRO DEFINITION TABLE ****")
 print(MDT_DF)
 print()
+print("**** ALA TABLE PASS I ****")
 print(ALA_DF)
 
 # PASS 2
@@ -74,5 +77,6 @@ dict4 = {
 
 PASS2_ALA = pd.DataFrame(dict4)
 print()
+print("**** ALA TABLE PASS II ****")
 print(PASS2_ALA)
 
