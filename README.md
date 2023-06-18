@@ -5,10 +5,10 @@
 ## Instructions
 
 **For now it does not support :-**
-```
-Macro Inside Macro
-Label in front of Macro Name
-```
+
+> Macro Inside Macro
+> Label in front of Macro Name
+
 
 # Here is how it Looks
 
