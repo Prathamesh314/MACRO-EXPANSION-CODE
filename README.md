@@ -4,7 +4,7 @@
 
 ## Instructions
 
-- **For now it does not suppose :- **
+**For now it does not suppose :-**
 ```
 Macro Inside Macro
 Label in front of Macro Name
