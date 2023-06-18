@@ -6,8 +6,8 @@
 
 **For now it does not support :-**
 
-> Macro Inside Macro
-> Label in front of Macro Name
+1. Macro Inside Macro
+2. Label in front of Macro Name
 
 
 # Here is how it Looks
