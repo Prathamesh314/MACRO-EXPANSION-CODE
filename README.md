@@ -14,3 +14,22 @@ Label in front of Macro Name
 
 ##### Macro Name Table
 <img src = "images/MNT.png" alt="MNT"/>
+
+
+##### Macro Definition Table
+<img src = "images/MDT.png" alt="MDT"/>
+
+<table>
+  <tr>
+    <th>ALA TABLE PASS I</th>
+    <th>ALA TABLE PASS II</th>
+  </tr>
+  <tr>
+    <td>
+      <img src="images/ALA PASS I.png"/>
+    </td>
+    <td>
+      <img src="images/ALA PASS II.png"/>
+    </td>
+  </tr>
+</table>
