@@ -4,6 +4,7 @@ MDT = []
 MNT = []
 ALA = []
 REAL_ARGS = []
+ALA_ARGS_DICT={}
 mdlp = 1
 mntp = 1
 
@@ -17,6 +18,7 @@ with open("input.txt","r") as file:
             args_list = args[1].split(',')
             for j in range(len(args_list)):
                 ALA.append([args_list[j],'#'+str(j+1)])
+                ALA_ARGS_DICT[args_list[j]] = '#'+str(j+1)
             k = i
             while(line[k] != "MEND\n"):
                 MDT.append([mdlp,line[k][:len(line[k])-1]])
@@ -37,6 +39,16 @@ with open("input.txt","r") as file:
 
 diff = len(ALA) - len(REAL_ARGS)
 REAL_ARGS.extend(['-']*diff)
+
+for i in range(1,len(MDT)):
+    next = MDT[i][1]
+    next_again = next.split(',')
+    try:
+        if(next_again[1] in ALA_ARGS_DICT):
+            MDT[i][1] = MDT[i][1].replace(next_again[1],ALA_ARGS_DICT[next_again[1]])
+    except:
+        pass
+
 
 dict1 = {
     "INDEX":[MDT[i][0] for i in range(len(MDT))],
