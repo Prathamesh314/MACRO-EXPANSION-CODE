@@ -2,71 +2,68 @@ import pandas as pd
 
 MDT = []
 MNT = []
-MNT_NAME=[]
+MNT_NAME = []
 ALA = []
 REAL_ARGS = []
 REAL_ARGS1 = []
-ALA_ARGS_DICT={}
-EXPANDED_SOURCE_CODE=[]
+ALA_ARGS_DICT = {}
 mdlp = 1
 mntp = 1
 
-with open("input.txt","r") as file:
+with open("input.txt", "r") as file:
     line = file.readlines()
     for i in range(len(line)):
-        if i!=0 and line[i - 1] == "MACRO\n":
-            MNT.append([mntp,[mdlp, line[i].split()[0]]])
+        if i != 0 and line[i - 1] == "MACRO\n":
+            MNT.append([mntp, [mdlp, line[i].split()[0]]])
             MNT_NAME.append(line[i].split()[0])
-            mntp+=1
+            mntp += 1
             args = line[i].split()
             args_list = args[1].split(',')
             for j in range(len(args_list)):
-                ALA.append([args_list[j],'#'+str(j+1)])
-                ALA_ARGS_DICT[args_list[j]] = '#'+str(j+1)
+                ALA.append([args_list[j], '#' + str(j + 1)])
+                ALA_ARGS_DICT[args_list[j]] = '#' + str(j + 1)
             k = i
-            while(line[k] != "MEND\n"):
-                MDT.append([mdlp,line[k][:len(line[k])-1]])
-                mdlp+=1
-                k+=1
-            MDT.append([mdlp,"MEND"])
-            mdlp+=1
+            while line[k] != "MEND\n":
+                MDT.append([mdlp, line[k][:len(line[k]) - 1]])
+                mdlp += 1
+                k += 1
+            MDT.append([mdlp, "MEND"])
+            mdlp += 1
         try:
             if line[i].split()[0] == "USING":
-                while(line[i] != "END"):
+                while line[i] != "END":
                     t = line[i].split()
                     for j in MNT:
                         if t[0] in j[1]:
                             REAL_ARGS1.append(t[1].split(','))
                             REAL_ARGS.extend(t[1].split(','))
-                    i+=1
+                    i += 1
         except:
             pass
 
 diff = len(ALA) - len(REAL_ARGS)
-REAL_ARGS.extend(['-']*diff)
+REAL_ARGS.extend(['-'] * diff)
 
 i = 1
-for i in range(1,len(MDT)):
+for i in range(1, len(MDT)):
     next = MDT[i][1].split()
     try:
         next_again = next[1].split(',')
         for j in next_again:
             if next[0] in MNT_NAME or next_again[1] not in ALA_ARGS_DICT:
                 continue
-            MDT[i][1] = MDT[i][1].replace(next_again[1],ALA_ARGS_DICT[next_again[1]])
+            MDT[i][1] = MDT[i][1].replace(next_again[1], ALA_ARGS_DICT[next_again[1]])
     except:
         pass
 
 REAL_ARGS_LIST = []
 for i in range(len(MNT)):
-    d = {}
-    d[MNT[i][1][1]] = REAL_ARGS1[i]
+    d = {MNT[i][1][1]: REAL_ARGS1[i]}
     REAL_ARGS_LIST.append(d)
 
-
 dict1 = {
-    "INDEX":[MDT[i][0] for i in range(len(MDT))],
-    "INSTRUCTION":[MDT[i][1] for i in range(len(MDT))]
+    "INDEX": [MDT[i][0] for i in range(len(MDT))],
+    "INSTRUCTION": [MDT[i][1] for i in range(len(MDT))]
 }
 
 dict2 = {
@@ -105,4 +102,3 @@ PASS2_ALA = pd.DataFrame(dict4)
 print()
 print("**** ALA TABLE PASS II ****")
 print(PASS2_ALA)
-
