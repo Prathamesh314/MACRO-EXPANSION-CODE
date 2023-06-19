@@ -2,9 +2,12 @@ import pandas as pd
 
 MDT = []
 MNT = []
+MNT_NAME=[]
 ALA = []
 REAL_ARGS = []
+REAL_ARGS1 = []
 ALA_ARGS_DICT={}
+EXPANDED_SOURCE_CODE=[]
 mdlp = 1
 mntp = 1
 
@@ -13,6 +16,7 @@ with open("input.txt","r") as file:
     for i in range(len(line)):
         if i!=0 and line[i - 1] == "MACRO\n":
             MNT.append([mntp,[mdlp, line[i].split()[0]]])
+            MNT_NAME.append(line[i].split()[0])
             mntp+=1
             args = line[i].split()
             args_list = args[1].split(',')
@@ -32,6 +36,7 @@ with open("input.txt","r") as file:
                     t = line[i].split()
                     for j in MNT:
                         if t[0] in j[1]:
+                            REAL_ARGS1.append(t[1].split(','))
                             REAL_ARGS.extend(t[1].split(','))
                     i+=1
         except:
@@ -40,14 +45,23 @@ with open("input.txt","r") as file:
 diff = len(ALA) - len(REAL_ARGS)
 REAL_ARGS.extend(['-']*diff)
 
+i = 1
 for i in range(1,len(MDT)):
-    next = MDT[i][1]
-    next_again = next.split(',')
+    next = MDT[i][1].split()
     try:
-        if(next_again[1] in ALA_ARGS_DICT):
+        next_again = next[1].split(',')
+        for j in next_again:
+            if next[0] in MNT_NAME or next_again[1] not in ALA_ARGS_DICT:
+                continue
             MDT[i][1] = MDT[i][1].replace(next_again[1],ALA_ARGS_DICT[next_again[1]])
     except:
         pass
+
+REAL_ARGS_LIST = []
+for i in range(len(MNT)):
+    d = {}
+    d[MNT[i][1][1]] = REAL_ARGS1[i]
+    REAL_ARGS_LIST.append(d)
 
 
 dict1 = {
@@ -56,9 +70,9 @@ dict1 = {
 }
 
 dict2 = {
-    "INDEX":[i[0] for i in MNT],
-    "NAME":[i[1][1] for i in MNT],
-    "MDT INDEX":[i[1][0] for i in MNT]
+    "INDEX": [i[0] for i in MNT],
+    "NAME": [i[1][1] for i in MNT],
+    "MDT INDEX": [i[1][0] for i in MNT]
 }
 
 dict3 = {
